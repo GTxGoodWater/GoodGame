@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>SolarisGG</title>
+<title>GoodFire Desktop</title>
 
 <!-- Fuentes -->
 <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600&family=Lilita+One&display=swap" rel="stylesheet">
@@ -11,26 +11,29 @@
   body {
     margin: 0;
     padding: 0;
-    background: linear-gradient(135deg, #dbeafe, #eef2ff);
-    font-family: "Lexend", sans-serif;
     height: 100vh;
+    background: url('https://wallpapercave.com/wp/wp9637542.jpg');
+    background-size: cover;
+    background-position: center;
+    font-family: "Lexend", sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
   }
 
   .desktop {
-    width: 90%;
-    max-width: 900px;
     text-align: center;
+    backdrop-filter: blur(6px);
+    padding: 40px;
+    border-radius: 20px;
   }
 
   h1 {
     font-family: "Lilita One", cursive;
-    font-size: 60px;
-    color: #1e3a8a;
+    font-size: 70px;
+    color: white;
     margin-bottom: 40px;
-    text-shadow: 0 3px 6px rgba(0,0,0,0.15);
+    text-shadow: 0 4px 10px rgba(0,0,0,0.4);
   }
 
   .apps {
@@ -42,53 +45,55 @@
   .app {
     width: 150px;
     height: 150px;
-    background: #ffffff;
+    background: rgba(255,255,255,0.25);
     border-radius: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     cursor: pointer;
     transition: 0.25s;
-    border: 2px solid #e2e8f0;
+    border: 2px solid rgba(255,255,255,0.4);
+    backdrop-filter: blur(4px);
   }
 
   .app:hover {
     transform: scale(1.08);
-    box-shadow: 0 14px 35px rgba(0,0,0,0.25);
-    border-color: #3b82f6;
+    background: rgba(255,255,255,0.35);
+    border-color: white;
   }
 
   .app-icon {
-    font-size: 50px;
+    font-size: 55px;
     margin-bottom: 10px;
   }
 
   .app-name {
     font-size: 18px;
     font-weight: 600;
-    color: #1e293b;
+    color: white;
+    text-shadow: 0 2px 6px rgba(0,0,0,0.4);
   }
 </style>
 </head>
 <body>
 
 <div class="desktop">
-  <h1>SolarisGG</h1>
+  <h1>GoodFire Desktop</h1>
 
   <div class="apps">
 
-    <!-- APP 1 -->
+    <!-- APP 1: SHOOTOUT -->
     <div class="app" onclick="location.href='ShootOut.html'">
       <div class="app-icon">🎮</div>
       <div class="app-name">ShootOut</div>
     </div>
 
-    <!-- APP 2 -->
-    <div class="app" onclick="location.href='app2.html'">
-      <div class="app-icon">🧩</div>
-      <div class="app-name">App 2</div>
+    <!-- APP 2: GGCRAFT -->
+    <div class="app" onclick="location.href='GGCraft.html'">
+      <div class="app-icon">🧱</div>
+      <div class="app-name">GGCraft</div>
     </div>
 
   </div>
