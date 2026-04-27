@@ -1,14 +1,14 @@
 <!DOCTYPE html><html lang="es"><head><meta charset="UTF-8"><title>SolarisGG Network</title><link rel="icon" type="image/png" href="SolarisGG-Logo.png"><link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;600;700&display=swap" rel="stylesheet"><style>
 *{box-sizing:border-box;margin:0;padding:0}
 body{height:100vh;overflow:hidden;font-family:"Lexend",sans-serif;background:#000}
-#loading-screen{position:absolute;inset:0;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:20;animation:fadeOut 1s ease forwards;animation-delay:3.5s}
+#loading-screen{position:absolute;inset:0;background:#000;display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:100000;animation:fadeOut 1s ease forwards;animation-delay:3.5s}
 #loading-logo{width:200px;height:200px;animation:logoAnim 3s ease}
 #loading-bar{width:300px;height:18px;border-radius:10px;background:rgba(255,255,255,.2);margin-top:25px;overflow:hidden}
 #loading-progress{width:0;height:100%;background:linear-gradient(90deg,#00aaff,#00ffea);animation:loadAnim 3s ease forwards}
 @keyframes logoAnim{0%{opacity:0;transform:scale(.6)}50%{opacity:1;transform:scale(1)}100%{opacity:1;transform:scale(1.05)}}
 @keyframes loadAnim{0%{width:0}100%{width:100%}}
 @keyframes fadeOut{0%{opacity:1}100%{opacity:0;visibility:hidden}}
-#login-screen{position:absolute;inset:0;background:url('SolarisGGFondo.png')center/cover no-repeat;backdrop-filter:blur(6px);display:flex;flex-direction:column;justify-content:center;align-items:center;transition:transform 1s ease;z-index:10}
+#login-screen{position:absolute;inset:0;background:url('SolarisGGFondo.png')center/cover no-repeat;backdrop-filter:blur(6px);display:flex;flex-direction:column;justify-content:center;align-items:center;transition:transform 1s ease;z-index:10000}
 #login-screen img{width:180px;height:180px;border-radius:50%;margin-bottom:20px;box-shadow:0 8px 25px rgba(0,0,0,.4)}
 #login-screen h1{font-size:48px;color:#fff;text-shadow:0 3px 8px rgba(0,0,0,.6);margin-bottom:30px;font-weight:700}
 #login-btn{padding:14px 40px;font-size:22px;border:none;border-radius:12px;background:rgba(255,255,255,.85);cursor:pointer;transition:.25s;font-weight:600;font-family:"Lexend"!important}
