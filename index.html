@@ -139,7 +139,7 @@
     left: 0;
   }
 
-  /* ICONOS */
+  /* ICONOS DEL ESCRITORIO */
   .icons {
     position: absolute;
     top: 40px;
@@ -185,7 +185,6 @@
     backdrop-filter: blur(18px);
     border-top: 1px solid rgba(255,255,255,0.5);
     display: flex;
-    justify-content: center;
     align-items: center;
     animation: taskbarAnim 1.2s ease;
   }
@@ -195,23 +194,78 @@
     100% { transform: translateY(0); opacity: 1; }
   }
 
-  .taskbar-icons {
-    display: flex;
-    gap: 35px;
-  }
-
-  .taskbar-icons img {
-    width: 32px;
-    height: 32px;
+  /* LUPA */
+  #search-btn {
+    position: absolute;
+    left: 15px;
     cursor: pointer;
+    width: 38px;
+    height: 38px;
     transition: 0.2s;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
   }
 
-  .taskbar-icons img:hover {
+  #search-btn:hover {
     transform: scale(1.15);
   }
 
+  /* ===========================
+     MENÚ DE BÚSQUEDA
+     =========================== */
+  #search-menu {
+    position: absolute;
+    bottom: 80px;
+    left: 10px;
+    width: 380px;
+    height: 500px;
+    background: rgba(30,30,30,0.85);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    padding: 20px;
+    display: none;
+    flex-direction: column;
+    animation: menuAnim 0.3s ease;
+  }
+
+  @keyframes menuAnim {
+    0% { transform: translateY(20px); opacity: 0; }
+    100% { transform: translateY(0); opacity: 1; }
+  }
+
+  #search-input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+
+  .search-item {
+    padding: 12px;
+    background: rgba(255,255,255,0.1);
+    margin-bottom: 10px;
+    border-radius: 8px;
+    color: white;
+    cursor: pointer;
+    transition: 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .search-item:hover {
+    background: rgba(255,255,255,0.2);
+  }
+
+  .search-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 6px;
+    object-fit: cover;
+  }
+
+  /* TEXTO SOLARISGG + LOGO */
   .taskbar-title {
     position: absolute;
     right: 25px;
@@ -241,6 +295,21 @@
 <script>
   function login() {
     document.getElementById("login-screen").style.transform = "translateY(-100%)";
+  }
+
+  function toggleSearch() {
+    const menu = document.getElementById("search-menu");
+    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+  }
+
+  function filterGames() {
+    let input = document.getElementById("search-input").value.toLowerCase();
+    let items = document.getElementsByClassName("search-item");
+
+    for (let i = 0; i < items.length; i++) {
+      let text = items[i].innerText.toLowerCase();
+      items[i].style.display = text.includes(input) ? "flex" : "none";
+    }
   }
 </script>
 
@@ -283,12 +352,26 @@
     </div>
   </div>
 
-  <div class="taskbar">
-    <div class="taskbar-icons">
-      <img src="https://cdn-icons-png.flaticon.com/512/732/732221.png">
-      <img src="https://cdn-icons-png.flaticon.com/512/732/732223.png">
-      <img src="https://cdn-icons-png.flaticon.com/512/732/732228.png">
+  <!-- MENÚ DE BÚSQUEDA -->
+  <div id="search-menu">
+    <input id="search-input" onkeyup="filterGames()" placeholder="Buscar juegos...">
+
+    <div class="search-item" onclick="location.href='ShootOut.html'">
+      <img src="arma.png" class="search-icon">
+      <span>ShootOut</span>
     </div>
+
+    <div class="search-item" onclick="location.href='GGCraft.html'">
+      <img src="bloque.png" class="search-icon">
+      <span>GGCraft</span>
+    </div>
+  </div>
+
+  <!-- BARRA DE TAREAS -->
+  <div class="taskbar">
+
+    <!-- LUPA -->
+    <img id="search-btn" src="lupa.png" onclick="toggleSearch()">
 
     <div class="taskbar-title">
       <img src="SolarisGG-Logo.png">
