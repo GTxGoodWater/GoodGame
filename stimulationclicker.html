@@ -271,11 +271,11 @@
 <!-- DVD -->
 <img id="dvdLogo" src="dvd.png" style="
   position: fixed;
-  width: 90px;
+  width: 150px;
   top: 200px;
   left: 200px;
   display: none;
-  z-index: 9999;
+  z-index: 2;
 ">
 
 <!-- TIENDA -->
@@ -688,11 +688,28 @@ function startDVDBounce() {
     const W = window.innerWidth - dvdLogo.offsetWidth;
     const H = window.innerHeight - dvdLogo.offsetHeight;
 
+    let rebote = false;
+
     // Rebote horizontal
-    if (dvdX <= 0 || dvdX >= W) dvdVX *= -1;
+    if (dvdX <= 0 || dvdX >= W) {
+      dvdVX *= -1;
+      rebote = true;
+    }
 
     // Rebote vertical
-    if (dvdY <= 0 || dvdY >= H) dvdVY *= -1;
+    if (dvdY <= 0 || dvdY >= H) {
+      dvdVY *= -1;
+      rebote = true;
+    }
+
+    // Si hubo rebote → +20 clicks
+    if (rebote) {
+      clicks += 20;
+      counter.textContent = clicks;
+
+      // flotante en la posición del DVD
+      spawnFloat(dvdX + 40, dvdY + 40, "+20");
+    }
 
     dvdLogo.style.left = dvdX + "px";
     dvdLogo.style.top = dvdY + "px";
