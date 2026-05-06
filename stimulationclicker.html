@@ -267,6 +267,17 @@
   <div id="clickBtn">Clickame</div>
   <div id="counter">0</div>
 </div>
+
+<!-- DVD -->
+<img id="dvdLogo" src="dvd.png" style="
+  position: fixed;
+  width: 90px;
+  top: 200px;
+  left: 200px;
+  display: none;
+  z-index: 9999;
+">
+
 <!-- TIENDA -->
 <div class="window" id="shopWindow">
   <div class="window-header" id="shopHeader">
@@ -306,6 +317,10 @@
     <div class="upgrade disabled" id="upgradeSubway">
       SubwayTV — Video de Subway Surfers +13 click/s cuando está visible — Precio: 225 clicks
     </div>
+    
+    <div class="upgrade disabled" id="upgradeDVD">
+      DVD Bounce — Un DVD rebota por la pantalla — Precio: 300 clicks
+    </div>
   </div>
 
   <div class="resize-handle" id="resizeHandle"></div>
@@ -322,9 +337,9 @@
     </div>
   </div>
 
-  <iframe id="subwayFrame"
-    src="https://www.youtube.com/embed/ECuuGNt4rqY?autoplay=1&mute=1&loop=1&playlist=ECuuGNt4rqY&controls=0&disablekb=1&modestbranding=1&rel=0">
-  </iframe>
+<iframe id="subwayFrame"
+  src="https://www.youtube.com/embed/L_fcrOyoWZ8?autoplay=1&mute=1&loop=1&playlist=L_fcrOyoWZ8&controls=0&disablekb=1&modestbranding=1&rel=0">
+</iframe>
 
   <div class="resize-handle" id="resizeHandleSubway"></div>
 </div>
@@ -332,11 +347,21 @@
 <script>
 let clicks = 0;
 let floatEnabled = false;
-let autoClicks = 0;
+
+let autoRedondeo = 0; // +1 del upgrade UI
+let autoColory   = 0; // +3 del upgrade Color
+let autoOtros    = 0; // por si luego quieres más
+let subwayBonus  = 0; // +13 del Subway
+
 let lastClicks = 0;
 let cpsEnabled = false;
 let animationsEnabled = false;
-let subwayBonus = 0;
+
+let dvdActive = false;
+let dvdX = 200;
+let dvdY = 200;
+let dvdVX = 3;
+let dvdVY = 3;
 
 const clickBtn = document.getElementById("clickBtn");
 const counter = document.getElementById("counter");
@@ -357,6 +382,14 @@ const upgradeLexend = document.getElementById("upgradeLexend");
 const upgradeCPS = document.getElementById("upgradeCPS");
 const upgradeAnim = document.getElementById("upgradeAnim");
 const upgradeSubway = document.getElementById("upgradeSubway");
+const upgradeDVD = document.getElementById("upgradeDVD");
+const dvdLogo = document.getElementById("dvdLogo");
+
+upgradeDVD.addEventListener("click", () => buyUpgrade(300, upgradeDVD, () => {
+  dvdActive = true;
+  dvdLogo.style.display = "block";
+  startDVDBounce();
+}));
 
 /* CLICK PRINCIPAL */
 clickBtn.addEventListener("click", (e) => {
@@ -395,6 +428,7 @@ function updateUpgrades() {
   toggle(upgradeCPS, clicks >= 120);
   toggle(upgradeAnim, clicks >= 150);
   toggle(upgradeSubway, clicks >= 225);
+  toggle(upgradeDVD, clicks >= 300);
 }
 
 function toggle(el, condition) {
@@ -491,18 +525,40 @@ document.getElementById("maxSubway").addEventListener("click", () => toggleMaxim
 
 /* AUTOCLICK */
 setInterval(() => {
-  let totalAuto = autoClicks;
+  let sources = [];
 
+  // Redondeo
+  if (autoRedondeo > 0) sources.push(autoRedondeo);
+
+  // Colory
+  if (autoColory > 0) sources.push(autoColory);
+
+  // Otros upgrades futuros
+  if (autoOtros > 0) sources.push(autoOtros);
+
+  // SubwayTV
   if (subwayBonus > 0 && subwayWindow.style.display !== "none") {
-    totalAuto += subwayBonus;
+    sources.push(subwayBonus);
   }
 
-  if (totalAuto > 0) {
-    clicks += totalAuto;
+  if (sources.length > 0) {
+    let total = sources.reduce((a, b) => a + b, 0);
+    clicks += total;
     counter.textContent = clicks;
 
     const rect = clickBtn.getBoundingClientRect();
-    spawnFloat(rect.left + rect.width / 2, rect.top + rect.height / 2, "+" + totalAuto);
+
+    // Mostrar cada fuente por separado
+    sources.forEach(value => {
+      const offsetX = (Math.random() * 40) - 20;
+      const offsetY = (Math.random() * 20) - 10;
+
+      spawnFloat(
+        rect.left + rect.width / 2 + offsetX,
+        rect.top + rect.height / 2 + offsetY,
+        "+" + value
+      );
+    });
 
     updateUpgrades();
   }
@@ -524,14 +580,14 @@ setInterval(() => {
 upgradeFloat.addEventListener("click", () => buyUpgrade(10, upgradeFloat, () => floatEnabled = true));
 
 upgradeUI.addEventListener("click", () => buyUpgrade(20, upgradeUI, () => {
-  autoClicks += 1;
+  autoRedondeo = 1;
   document.querySelectorAll("*:not(#taskbar):not(#taskbar *)").forEach(el => {
     el.style.borderRadius = "12px";
   });
 }));
 
 upgradeColor.addEventListener("click", () => buyUpgrade(50, upgradeColor, () => {
-  autoClicks += 3;
+  autoColory = 3;
   document.body.style.background = "#ffe7c4";
   document.querySelectorAll(".window").forEach(w => { w.style.background = "#fff3d6"; });
   document.getElementById("clickBtn").style.background = "#ffe0b5";
@@ -621,6 +677,31 @@ function makeResizable(handle, win) {
 
 makeResizable(document.getElementById("resizeHandle"), shopWindow);
 makeResizable(document.getElementById("resizeHandleSubway"), subwayWindow);
+
+function startDVDBounce() {
+  function moveDVD() {
+    if (!dvdActive) return;
+
+    dvdX += dvdVX;
+    dvdY += dvdVY;
+
+    const W = window.innerWidth - dvdLogo.offsetWidth;
+    const H = window.innerHeight - dvdLogo.offsetHeight;
+
+    // Rebote horizontal
+    if (dvdX <= 0 || dvdX >= W) dvdVX *= -1;
+
+    // Rebote vertical
+    if (dvdY <= 0 || dvdY >= H) dvdVY *= -1;
+
+    dvdLogo.style.left = dvdX + "px";
+    dvdLogo.style.top = dvdY + "px";
+
+    requestAnimationFrame(moveDVD);
+  }
+
+  requestAnimationFrame(moveDVD);
+}
 
 </script>
 </body>
