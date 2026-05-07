@@ -104,6 +104,10 @@ body{height:100vh;overflow:hidden;font-family:"Lexend",sans-serif;background:#00
       <span>GGCraft</span>
     </div>
 
+    <div class="icon" onclick="openApp('stimulation')">
+      <img src="stimulation.png">
+      <span>StimulationClicker</span>
+    </div>
   </div>
 
   <!-- Ventana Ajustes -->
@@ -161,6 +165,24 @@ body{height:100vh;overflow:hidden;font-family:"Lexend",sans-serif;background:#00
     </div>
   </div>
 
+<!-- Ventana StimulationClicker -->
+<div id="stimulation-window" class="window">
+  <div class="window-header">
+    <img class="window-header-icon" src="stimulation.png">
+    <div class="window-title">StimulationClicker</div>
+    <div class="window-buttons">
+      <button class="win-btn" onclick="minimizeApp('stimulation')">–</button>
+      <button class="win-btn" onclick="maximizeApp('stimulation')">□</button>
+      <button class="win-btn close" onclick="closeApp('stimulation')">X</button>
+    </div>
+  </div>
+  <div class="window-content">
+    <iframe src="stimulationclicker.html"
+      style="width:100%;height:100%;border:none;border-radius:8px"></iframe>
+  </div>
+</div>
+
+
 </div> <!-- FIN DESKTOP -->
 
 <!-- Ventana GGCraft -->
@@ -213,6 +235,11 @@ body{height:100vh;overflow:hidden;font-family:"Lexend",sans-serif;background:#00
     <div class="search-item" data-cat="our" onclick="openApp('shootout')">
       <img src="arma.png" class="search-icon"><span>ShootOut</span>
     </div>
+
+<div class="search-item" data-cat="our" onclick="openApp('stimulation')">
+  <img src="stimulation.png" class="search-icon">
+  <span>StimulationClicker</span>
+</div>
 
   </div>
 
@@ -341,6 +368,7 @@ window.onload=()=>{
     registerWindow("zoyl","ZOYLSolaris.png","zoyl-window");
     registerWindow("ggcraft", "bloque.png", "ggcraft-window");
     registerWindow("shootout", "arma.png", "shootout-window");};
+   registerWindow("stimulation", "stimulation.png", "stimulation-window");
     registerWindow("chrome", "chrome.png", "chrome-window");
 </script>
 </body></html>
